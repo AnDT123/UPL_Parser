@@ -1,0 +1,7 @@
+
+*.vsidx
+/.vs
+/Debug
+/x64
+UPL_Parser.vcxproj.filters
+UPL_Parser.vcxproj.user

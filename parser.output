@@ -1,0 +1,790 @@
+Grammar
+
+    0 $accept: program $end
+
+    1 program: START stmtlist END
+    2        | error
+
+    3 block: '{' stmtlist '}'
+    4      | '{' error '}'
+
+    5 stmtlist: /* empty */
+    6         | stmt stmtlist
+
+    7 stmt: decl_stmt
+    8     | assign_stmt
+    9     | ctrl_stmt
+   10     | loop_stmt
+   11     | block
+   12     | error ';'
+
+   13 decl_stmt: decl_type decl_body ';'
+
+   14 decl_body: ID
+   15          | ID ASSIGN e
+
+   16 decl_type: INT
+   17          | BOOL
+
+   18 assign_stmt: ID ASSIGN e ';'
+   19            | PRINT e ';'
+
+   20 ctrl_stmt: IF cond ctrl_stmt1
+
+   21 cond: f rop f
+
+   22 rop: GT
+   23    | GE
+   24    | EQ
+
+   25 ctrl_stmt1: THEN block
+   26           | THEN block ELSE block
+
+   27 loop_stmt: DO block WHILE '(' cond ')' ';'
+
+   28 e: e PLUS t
+   29  | t
+   30  | cond
+
+   31 t: t TIMES f
+   32  | f
+
+   33 f: ID
+   34  | INT_NUM
+   35  | '(' e ')'
+   36  | '{' error '}'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 27 35
+')' (41) 27 35
+';' (59) 12 13 18 19 27
+'{' (123) 3 4 36
+'}' (125) 3 4 36
+error (256) 2 4 12 36
+START (258) 1
+END (259) 1
+IF (260) 20
+THEN (261) 25 26
+ELSE (262) 26
+PLUS (263) 28
+TIMES (264) 31
+INT (265) 16
+BOOL (266) 17
+DO (267) 27
+WHILE (268) 27
+PRINT (269) 19
+GT (270) 22
+GE (271) 23
+EQ (272) 24
+ASSIGN (273) 15 18
+ID (274) 14 15 18 33
+INT_NUM (275) 34
+
+
+Nonterminals, with rules where they appear
+
+$accept (26)
+    on left: 0
+program (27)
+    on left: 1 2, on right: 0
+block (28)
+    on left: 3 4, on right: 11 25 26 27
+stmtlist (29)
+    on left: 5 6, on right: 1 3 6
+stmt (30)
+    on left: 7 8 9 10 11 12, on right: 6
+decl_stmt (31)
+    on left: 13, on right: 7
+decl_body (32)
+    on left: 14 15, on right: 13
+decl_type (33)
+    on left: 16 17, on right: 13
+assign_stmt (34)
+    on left: 18 19, on right: 8
+ctrl_stmt (35)
+    on left: 20, on right: 9
+cond (36)
+    on left: 21, on right: 20 27 30
+rop (37)
+    on left: 22 23 24, on right: 21
+ctrl_stmt1 (38)
+    on left: 25 26, on right: 20
+loop_stmt (39)
+    on left: 27, on right: 10
+e (40)
+    on left: 28 29 30, on right: 15 18 19 28 35
+t (41)
+    on left: 31 32, on right: 28 29 31
+f (42)
+    on left: 33 34 35 36, on right: 21 31 32
+
+
+State 0
+
+    0 $accept: . program $end
+
+    error  shift, and go to state 1
+    START  shift, and go to state 2
+
+    program  go to state 3
+
+
+State 1
+
+    2 program: error .
+
+    $default  reduce using rule 2 (program)
+
+
+State 2
+
+    1 program: START . stmtlist END
+
+    error  shift, and go to state 4
+    IF     shift, and go to state 5
+    INT    shift, and go to state 6
+    BOOL   shift, and go to state 7
+    DO     shift, and go to state 8
+    PRINT  shift, and go to state 9
+    ID     shift, and go to state 10
+    '{'    shift, and go to state 11
+
+    END  reduce using rule 5 (stmtlist)
+
+    block        go to state 12
+    stmtlist     go to state 13
+    stmt         go to state 14
+    decl_stmt    go to state 15
+    decl_type    go to state 16
+    assign_stmt  go to state 17
+    ctrl_stmt    go to state 18
+    loop_stmt    go to state 19
+
+
+State 3
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 20
+
+
+State 4
+
+   12 stmt: error . ';'
+
+    ';'  shift, and go to state 21
+
+
+State 5
+
+   20 ctrl_stmt: IF . cond ctrl_stmt1
+
+    ID       shift, and go to state 22
+    INT_NUM  shift, and go to state 23
+    '{'      shift, and go to state 24
+    '('      shift, and go to state 25
+
+    cond  go to state 26
+    f     go to state 27
+
+
+State 6
+
+   16 decl_type: INT .
+
+    $default  reduce using rule 16 (decl_type)
+
+
+State 7
+
+   17 decl_type: BOOL .
+
+    $default  reduce using rule 17 (decl_type)
+
+
+State 8
+
+   27 loop_stmt: DO . block WHILE '(' cond ')' ';'
+
+    '{'  shift, and go to state 11
+
+    block  go to state 28
+
+
+State 9
+
+   19 assign_stmt: PRINT . e ';'
+
+    ID       shift, and go to state 22
+    INT_NUM  shift, and go to state 23
+    '{'      shift, and go to state 24
+    '('      shift, and go to state 25
+
+    cond  go to state 29
+    e     go to state 30
+    t     go to state 31
+    f     go to state 32
+
+
+State 10
+
+   18 assign_stmt: ID . ASSIGN e ';'
+
+    ASSIGN  shift, and go to state 33
+
+
+State 11
+
+    3 block: '{' . stmtlist '}'
+    4      | '{' . error '}'
+
+    error  shift, and go to state 34
+    IF     shift, and go to state 5
+    INT    shift, and go to state 6
+    BOOL   shift, and go to state 7
+    DO     shift, and go to state 8
+    PRINT  shift, and go to state 9
+    ID     shift, and go to state 10
+    '{'    shift, and go to state 11
+
+    '}'  reduce using rule 5 (stmtlist)
+
+    block        go to state 12
+    stmtlist     go to state 35
+    stmt         go to state 14
+    decl_stmt    go to state 15
+    decl_type    go to state 16
+    assign_stmt  go to state 17
+    ctrl_stmt    go to state 18
+    loop_stmt    go to state 19
+
+
+State 12
+
+   11 stmt: block .
+
+    $default  reduce using rule 11 (stmt)
+
+
+State 13
+
+    1 program: START stmtlist . END
+
+    END  shift, and go to state 36
+
+
+State 14
+
+    6 stmtlist: stmt . stmtlist
+
+    error  shift, and go to state 4
+    IF     shift, and go to state 5
+    INT    shift, and go to state 6
+    BOOL   shift, and go to state 7
+    DO     shift, and go to state 8
+    PRINT  shift, and go to state 9
+    ID     shift, and go to state 10
+    '{'    shift, and go to state 11
+
+    END  reduce using rule 5 (stmtlist)
+    '}'  reduce using rule 5 (stmtlist)
+
+    block        go to state 12
+    stmtlist     go to state 37
+    stmt         go to state 14
+    decl_stmt    go to state 15
+    decl_type    go to state 16
+    assign_stmt  go to state 17
+    ctrl_stmt    go to state 18
+    loop_stmt    go to state 19
+
+
+State 15
+
+    7 stmt: decl_stmt .
+
+    $default  reduce using rule 7 (stmt)
+
+
+State 16
+
+   13 decl_stmt: decl_type . decl_body ';'
+
+    ID  shift, and go to state 38
+
+    decl_body  go to state 39
+
+
+State 17
+
+    8 stmt: assign_stmt .
+
+    $default  reduce using rule 8 (stmt)
+
+
+State 18
+
+    9 stmt: ctrl_stmt .
+
+    $default  reduce using rule 9 (stmt)
+
+
+State 19
+
+   10 stmt: loop_stmt .
+
+    $default  reduce using rule 10 (stmt)
+
+
+State 20
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 21
+
+   12 stmt: error ';' .
+
+    $default  reduce using rule 12 (stmt)
+
+
+State 22
+
+   33 f: ID .
+
+    $default  reduce using rule 33 (f)
+
+
+State 23
+
+   34 f: INT_NUM .
+
+    $default  reduce using rule 34 (f)
+
+
+State 24
+
+   36 f: '{' . error '}'
+
+    error  shift, and go to state 40
+
+
+State 25
+
+   35 f: '(' . e ')'
+
+    ID       shift, and go to state 22
+    INT_NUM  shift, and go to state 23
+    '{'      shift, and go to state 24
+    '('      shift, and go to state 25
+
+    cond  go to state 29
+    e     go to state 41
+    t     go to state 31
+    f     go to state 32
+
+
+State 26
+
+   20 ctrl_stmt: IF cond . ctrl_stmt1
+
+    THEN  shift, and go to state 42
+
+    ctrl_stmt1  go to state 43
+
+
+State 27
+
+   21 cond: f . rop f
+
+    GT  shift, and go to state 44
+    GE  shift, and go to state 45
+    EQ  shift, and go to state 46
+
+    rop  go to state 47
+
+
+State 28
+
+   27 loop_stmt: DO block . WHILE '(' cond ')' ';'
+
+    WHILE  shift, and go to state 48
+
+
+State 29
+
+   30 e: cond .
+
+    $default  reduce using rule 30 (e)
+
+
+State 30
+
+   19 assign_stmt: PRINT e . ';'
+   28 e: e . PLUS t
+
+    PLUS  shift, and go to state 49
+    ';'   shift, and go to state 50
+
+
+State 31
+
+   29 e: t .
+   31 t: t . TIMES f
+
+    TIMES  shift, and go to state 51
+
+    $default  reduce using rule 29 (e)
+
+
+State 32
+
+   21 cond: f . rop f
+   32 t: f .
+
+    GT  shift, and go to state 44
+    GE  shift, and go to state 45
+    EQ  shift, and go to state 46
+
+    $default  reduce using rule 32 (t)
+
+    rop  go to state 47
+
+
+State 33
+
+   18 assign_stmt: ID ASSIGN . e ';'
+
+    ID       shift, and go to state 22
+    INT_NUM  shift, and go to state 23
+    '{'      shift, and go to state 24
+    '('      shift, and go to state 25
+
+    cond  go to state 29
+    e     go to state 52
+    t     go to state 31
+    f     go to state 32
+
+
+State 34
+
+    4 block: '{' error . '}'
+   12 stmt: error . ';'
+
+    '}'  shift, and go to state 53
+    ';'  shift, and go to state 21
+
+
+State 35
+
+    3 block: '{' stmtlist . '}'
+
+    '}'  shift, and go to state 54
+
+
+State 36
+
+    1 program: START stmtlist END .
+
+    $default  reduce using rule 1 (program)
+
+
+State 37
+
+    6 stmtlist: stmt stmtlist .
+
+    $default  reduce using rule 6 (stmtlist)
+
+
+State 38
+
+   14 decl_body: ID .
+   15          | ID . ASSIGN e
+
+    ASSIGN  shift, and go to state 55
+
+    $default  reduce using rule 14 (decl_body)
+
+
+State 39
+
+   13 decl_stmt: decl_type decl_body . ';'
+
+    ';'  shift, and go to state 56
+
+
+State 40
+
+   36 f: '{' error . '}'
+
+    '}'  shift, and go to state 57
+
+
+State 41
+
+   28 e: e . PLUS t
+   35 f: '(' e . ')'
+
+    PLUS  shift, and go to state 49
+    ')'   shift, and go to state 58
+
+
+State 42
+
+   25 ctrl_stmt1: THEN . block
+   26           | THEN . block ELSE block
+
+    '{'  shift, and go to state 11
+
+    block  go to state 59
+
+
+State 43
+
+   20 ctrl_stmt: IF cond ctrl_stmt1 .
+
+    $default  reduce using rule 20 (ctrl_stmt)
+
+
+State 44
+
+   22 rop: GT .
+
+    $default  reduce using rule 22 (rop)
+
+
+State 45
+
+   23 rop: GE .
+
+    $default  reduce using rule 23 (rop)
+
+
+State 46
+
+   24 rop: EQ .
+
+    $default  reduce using rule 24 (rop)
+
+
+State 47
+
+   21 cond: f rop . f
+
+    ID       shift, and go to state 22
+    INT_NUM  shift, and go to state 23
+    '{'      shift, and go to state 24
+    '('      shift, and go to state 25
+
+    f  go to state 60
+
+
+State 48
+
+   27 loop_stmt: DO block WHILE . '(' cond ')' ';'
+
+    '('  shift, and go to state 61
+
+
+State 49
+
+   28 e: e PLUS . t
+
+    ID       shift, and go to state 22
+    INT_NUM  shift, and go to state 23
+    '{'      shift, and go to state 24
+    '('      shift, and go to state 25
+
+    t  go to state 62
+    f  go to state 63
+
+
+State 50
+
+   19 assign_stmt: PRINT e ';' .
+
+    $default  reduce using rule 19 (assign_stmt)
+
+
+State 51
+
+   31 t: t TIMES . f
+
+    ID       shift, and go to state 22
+    INT_NUM  shift, and go to state 23
+    '{'      shift, and go to state 24
+    '('      shift, and go to state 25
+
+    f  go to state 64
+
+
+State 52
+
+   18 assign_stmt: ID ASSIGN e . ';'
+   28 e: e . PLUS t
+
+    PLUS  shift, and go to state 49
+    ';'   shift, and go to state 65
+
+
+State 53
+
+    4 block: '{' error '}' .
+
+    $default  reduce using rule 4 (block)
+
+
+State 54
+
+    3 block: '{' stmtlist '}' .
+
+    $default  reduce using rule 3 (block)
+
+
+State 55
+
+   15 decl_body: ID ASSIGN . e
+
+    ID       shift, and go to state 22
+    INT_NUM  shift, and go to state 23
+    '{'      shift, and go to state 24
+    '('      shift, and go to state 25
+
+    cond  go to state 29
+    e     go to state 66
+    t     go to state 31
+    f     go to state 32
+
+
+State 56
+
+   13 decl_stmt: decl_type decl_body ';' .
+
+    $default  reduce using rule 13 (decl_stmt)
+
+
+State 57
+
+   36 f: '{' error '}' .
+
+    $default  reduce using rule 36 (f)
+
+
+State 58
+
+   35 f: '(' e ')' .
+
+    $default  reduce using rule 35 (f)
+
+
+State 59
+
+   25 ctrl_stmt1: THEN block .
+   26           | THEN block . ELSE block
+
+    ELSE  shift, and go to state 67
+
+    $default  reduce using rule 25 (ctrl_stmt1)
+
+
+State 60
+
+   21 cond: f rop f .
+
+    $default  reduce using rule 21 (cond)
+
+
+State 61
+
+   27 loop_stmt: DO block WHILE '(' . cond ')' ';'
+
+    ID       shift, and go to state 22
+    INT_NUM  shift, and go to state 23
+    '{'      shift, and go to state 24
+    '('      shift, and go to state 25
+
+    cond  go to state 68
+    f     go to state 27
+
+
+State 62
+
+   28 e: e PLUS t .
+   31 t: t . TIMES f
+
+    TIMES  shift, and go to state 51
+
+    $default  reduce using rule 28 (e)
+
+
+State 63
+
+   32 t: f .
+
+    $default  reduce using rule 32 (t)
+
+
+State 64
+
+   31 t: t TIMES f .
+
+    $default  reduce using rule 31 (t)
+
+
+State 65
+
+   18 assign_stmt: ID ASSIGN e ';' .
+
+    $default  reduce using rule 18 (assign_stmt)
+
+
+State 66
+
+   15 decl_body: ID ASSIGN e .
+   28 e: e . PLUS t
+
+    PLUS  shift, and go to state 49
+
+    $default  reduce using rule 15 (decl_body)
+
+
+State 67
+
+   26 ctrl_stmt1: THEN block ELSE . block
+
+    '{'  shift, and go to state 11
+
+    block  go to state 69
+
+
+State 68
+
+   27 loop_stmt: DO block WHILE '(' cond . ')' ';'
+
+    ')'  shift, and go to state 70
+
+
+State 69
+
+   26 ctrl_stmt1: THEN block ELSE block .
+
+    $default  reduce using rule 26 (ctrl_stmt1)
+
+
+State 70
+
+   27 loop_stmt: DO block WHILE '(' cond ')' . ';'
+
+    ';'  shift, and go to state 71
+
+
+State 71
+
+   27 loop_stmt: DO block WHILE '(' cond ')' ';' .
+
+    $default  reduce using rule 27 (loop_stmt)
