@@ -131,18 +131,23 @@
   <ItemGroup>
     <ClCompile Include="lexer.flex.cpp" />
     <ClCompile Include="parser.tab.cpp" />
+    <ClCompile Include="SLR_Class.cpp" />
     <ClCompile Include="tree.cpp" />
     <ClCompile Include="UPL_Parser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h" />
     <ClInclude Include="parser.tab.h" />
+    <ClInclude Include="SLR_Class.h" />
   </ItemGroup>
   <ItemGroup>
     <Bison Include="parser.y" />
   </ItemGroup>
   <ItemGroup>
     <Flex Include="lexer.l" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="rule.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

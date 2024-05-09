@@ -6,6 +6,7 @@
 #include <sstream>
 #include "Common.h"
 #include "parser.tab.h"
+#include "SLR_Class.h"
 
 extern SyntaxTree* root;
 
@@ -24,6 +25,11 @@ void printT(const std::string& prefix, SyntaxTree* node, bool isLeft)
 		printT(prefix + (isLeft ? "|   " : "    "), node->l, true);
 		printT(prefix + (isLeft ? "|   " : "    "), node->r, false);
 	}
+}
+void bisonTest() {
+	while (yyparse() != 0);
+	std::cout << "success\n";
+	printT("", root, false);
 }
 int main(int /* argc */, char** /* argv */)
 {
@@ -65,8 +71,6 @@ int main(int /* argc */, char** /* argv */)
 		;
 	lexer->yy_delete_buffer(buffer); // Delete the buffer
 
-	while (yyparse() != 0);
-	std::cout << "success\n";
-	printT("", root,false);
+	StateFactory stateFactory;
 	
 }

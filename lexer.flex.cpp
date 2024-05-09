@@ -693,117 +693,117 @@ mylineno++;
 case 5:
 YY_RULE_SETUP
 #line 58 "lexer.l"
-{ Token t; t.type = START; t.value = START; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = START; t.value = START; tokens.push_back(t);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 59 "lexer.l"
-{ Token t; t.type = END; t.value = END; tokens.push_back(t); std::cout << t.type << '\n';}
+{ Token t; t.type = END; t.value = END; tokens.push_back(t); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 60 "lexer.l"
-{ Token t; t.type = ';'; t.value = ';'; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = ';'; t.value = ';'; tokens.push_back(t);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 61 "lexer.l"
-{ Token t; t.type = IF; t.value = IF; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = IF; t.value = IF; tokens.push_back(t);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 62 "lexer.l"
-{ Token t; t.type = THEN; t.value = THEN; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = THEN; t.value = THEN; tokens.push_back(t);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 63 "lexer.l"
-{ Token t; t.type = ELSE; t.value = ELSE; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = ELSE; t.value = ELSE; tokens.push_back(t);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 64 "lexer.l"
-{ Token t; t.type = PLUS; t.value = PLUS; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = PLUS; t.value = PLUS; tokens.push_back(t);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 65 "lexer.l"
-{ Token t; t.type = TIMES; t.value = TIMES; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = TIMES; t.value = TIMES; tokens.push_back(t);}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 66 "lexer.l"
-{ Token t; t.type = GT; t.value = GT; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = GT; t.value = GT; tokens.push_back(t);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 67 "lexer.l"
-{ Token t; t.type = GE; t.value = GE; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = GE; t.value = GE; tokens.push_back(t);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 68 "lexer.l"
-{ Token t; t.type = EQ; t.value = EQ; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = EQ; t.value = EQ; tokens.push_back(t);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 69 "lexer.l"
-{ Token t; t.type = INT_NUM; t.value = std::atoi(YYText()); tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = INT_NUM; t.value = std::atoi(YYText()); tokens.push_back(t);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 70 "lexer.l"
-{ Token t; t.type = INT; t.value = INT; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = INT; t.value = INT; tokens.push_back(t);}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 71 "lexer.l"
-{ Token t; t.type = BOOL; t.value = BOOL; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = BOOL; t.value = BOOL; tokens.push_back(t);}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 72 "lexer.l"
-{ Token t; t.type = DO; t.value = DO; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = DO; t.value = DO; tokens.push_back(t);}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 73 "lexer.l"
-{ Token t; t.type = WHILE; t.value = WHILE; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = WHILE; t.value = WHILE; tokens.push_back(t);}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 74 "lexer.l"
-{ Token t; t.type = PRINT; t.value = PRINT; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = PRINT; t.value = PRINT; tokens.push_back(t);}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 75 "lexer.l"
-{ Token t; t.type = ID; t.value = ID; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = ID; t.value = ID; tokens.push_back(t);}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 76 "lexer.l"
-{ Token t; t.type = '{'; t.value = '{'; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = '{'; t.value = '{'; tokens.push_back(t);}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 77 "lexer.l"
-{ Token t; t.type = '}'; t.value = '}'; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = '}'; t.value = '}'; tokens.push_back(t);}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 78 "lexer.l"
-{ Token t; t.type = '('; t.value = '('; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = '('; t.value = '('; tokens.push_back(t);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 79 "lexer.l"
-{ Token t; t.type =  ')'; t.value = ')'; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type =  ')'; t.value = ')'; tokens.push_back(t);}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 80 "lexer.l"
-{ Token t; t.type = ASSIGN; t.value = ASSIGN; tokens.push_back(t);std::cout << t.type << '\n';}
+{ Token t; t.type = ASSIGN; t.value = ASSIGN; tokens.push_back(t);}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP

@@ -1,0 +1,49 @@
+program-> START stmtlist END
+block-> { stmtlist }
+stmtlist-> ''
+stmtlist-> stmt stmtlist
+stmt-> decl_stmt
+stmt-> assign_stmt
+stmt-> ctrl_stmt
+stmt-> loop_stmt
+stmt-> block
+decl_stmt->  decl_type decl_body ; 
+decl_body-> ID
+decl_body-> ID ASSIGN e
+decl_type->  INT
+decl_type-> BOOL
+assign_stmt -> ID ASSIGN e ;
+assign_stmt-> PRINT e ;
+ctrl_stmt-> IF cond ctrl_stmt1
+cond-> f rop f
+rop-> GT
+rop-> GE
+rop-> EQ
+ctrl_stmt1-> THEN block
+ctrl_stmt1-> THEN block ELSE block
+loop_stmt->  DO block WHILE ( cond ) ;
+e-> e PLUS t
+e-> t 
+e-> cond
+t-> t TIMES f
+t-> f
+f-> ID
+f-> INT_NUM
+
+Nonterminal	FOLLOW
+program		-> {$}
+block		-> {END,},{,ID,PRINT,IF,DO,INT,BOOL,ELSE,WHILE}
+stmtlist	-> {END,}}
+stmt		-> {END,},{,ID,PRINT,IF,DO,INT,BOOL}
+decl_stmt	-> {END,},{,ID,PRINT,IF,DO,INT,BOOL}
+decl_body	-> {;}
+decl_type	-> {ID}
+assign_stmt	-> {END,},{,ID,PRINT,IF,DO,INT,BOOL}
+ctrl_stmt	-> {END,},{,ID,PRINT,IF,DO,INT,BOOL}
+cond		-> {THEN,),;,PLUS}
+rop			-> {ID,INT_NUM}
+ctrl_stmt1	-> {END,},{,ID,PRINT,IF,DO,INT,BOOL}
+loop_stmt	-> {END,},{,ID,PRINT,IF,DO,INT,BOOL}
+e			-> {;,PLUS}
+t			-> {;,PLUS,TIMES}
+f			-> {GT,GE,EQ,THEN,;,PLUS,TIMES,)}
