@@ -451,10 +451,11 @@ static const flex_int16_t yy_chk[136] =
 #include "Common.h"
 #include "parser.tab.h"
 std::vector<Token> tokens;
+std::vector<std::pair<int, int>> lineMap;
 
 int mylineno = 0;
-#line 456 "lexer.flex.cpp"
 #line 457 "lexer.flex.cpp"
+#line 458 "lexer.flex.cpp"
 
 #define INITIAL 0
 
@@ -583,10 +584,10 @@ YY_DECL
 		}
 
 	{
-#line 24 "lexer.l"
+#line 25 "lexer.l"
 
 
-#line 589 "lexer.flex.cpp"
+#line 590 "lexer.flex.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -645,19 +646,21 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 26 "lexer.l"
+#line 27 "lexer.l"
 /* skip blanks and tabs */
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 28 "lexer.l"
+#line 29 "lexer.l"
 {
 		int c;
 
 		while((c = yyinput()) != 0)
 			{
-			if(c == '\n')
+			if(c == '\n'){
 				++mylineno;
+				lineMap.push_back({tokens.size(), mylineno});
+			}
 
 			else if(c == '*')
 				{
@@ -671,7 +674,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 45 "lexer.l"
+#line 48 "lexer.l"
 {
 		int c;
 
@@ -679,6 +682,7 @@ YY_RULE_SETUP
 		{
 			if(c == '\n'){
 				++mylineno;
+				lineMap.push_back({tokens.size(), mylineno});
 				break;
 			}
 		}
@@ -687,135 +691,137 @@ YY_RULE_SETUP
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 56 "lexer.l"
-mylineno++;
+#line 60 "lexer.l"
+{	mylineno++;
+			lineMap.push_back({tokens.size(), mylineno});
+		}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 58 "lexer.l"
+#line 64 "lexer.l"
 { Token t; t.type = START; t.value = START; tokens.push_back(t);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 59 "lexer.l"
+#line 65 "lexer.l"
 { Token t; t.type = END; t.value = END; tokens.push_back(t); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 60 "lexer.l"
+#line 66 "lexer.l"
 { Token t; t.type = ';'; t.value = ';'; tokens.push_back(t);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 61 "lexer.l"
+#line 67 "lexer.l"
 { Token t; t.type = IF; t.value = IF; tokens.push_back(t);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 62 "lexer.l"
+#line 68 "lexer.l"
 { Token t; t.type = THEN; t.value = THEN; tokens.push_back(t);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 63 "lexer.l"
+#line 69 "lexer.l"
 { Token t; t.type = ELSE; t.value = ELSE; tokens.push_back(t);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 64 "lexer.l"
+#line 70 "lexer.l"
 { Token t; t.type = PLUS; t.value = PLUS; tokens.push_back(t);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 65 "lexer.l"
+#line 71 "lexer.l"
 { Token t; t.type = TIMES; t.value = TIMES; tokens.push_back(t);}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 66 "lexer.l"
+#line 72 "lexer.l"
 { Token t; t.type = GT; t.value = GT; tokens.push_back(t);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 67 "lexer.l"
+#line 73 "lexer.l"
 { Token t; t.type = GE; t.value = GE; tokens.push_back(t);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 68 "lexer.l"
+#line 74 "lexer.l"
 { Token t; t.type = EQ; t.value = EQ; tokens.push_back(t);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 69 "lexer.l"
+#line 75 "lexer.l"
 { Token t; t.type = INT_NUM; t.value = std::atoi(YYText()); tokens.push_back(t);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 70 "lexer.l"
+#line 76 "lexer.l"
 { Token t; t.type = INT; t.value = INT; tokens.push_back(t);}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 71 "lexer.l"
+#line 77 "lexer.l"
 { Token t; t.type = BOOL; t.value = BOOL; tokens.push_back(t);}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 72 "lexer.l"
+#line 78 "lexer.l"
 { Token t; t.type = DO; t.value = DO; tokens.push_back(t);}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 73 "lexer.l"
+#line 79 "lexer.l"
 { Token t; t.type = WHILE; t.value = WHILE; tokens.push_back(t);}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 74 "lexer.l"
+#line 80 "lexer.l"
 { Token t; t.type = PRINT; t.value = PRINT; tokens.push_back(t);}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 75 "lexer.l"
+#line 81 "lexer.l"
 { Token t; t.type = ID; t.value = ID; tokens.push_back(t);}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 76 "lexer.l"
+#line 82 "lexer.l"
 { Token t; t.type = '{'; t.value = '{'; tokens.push_back(t);}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 77 "lexer.l"
+#line 83 "lexer.l"
 { Token t; t.type = '}'; t.value = '}'; tokens.push_back(t);}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 78 "lexer.l"
+#line 84 "lexer.l"
 { Token t; t.type = '('; t.value = '('; tokens.push_back(t);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 79 "lexer.l"
+#line 85 "lexer.l"
 { Token t; t.type =  ')'; t.value = ')'; tokens.push_back(t);}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 80 "lexer.l"
+#line 86 "lexer.l"
 { Token t; t.type = ASSIGN; t.value = ASSIGN; tokens.push_back(t);}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 81 "lexer.l"
+#line 87 "lexer.l"
 { std::cout << "Error" << '\n'; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 82 "lexer.l"
+#line 88 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 818 "lexer.flex.cpp"
+#line 824 "lexer.flex.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1778,6 +1784,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 82 "lexer.l"
+#line 88 "lexer.l"
 
 

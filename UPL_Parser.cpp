@@ -8,9 +8,10 @@
 #include "parser.tab.h"
 #include "SLR_Class.h"
 
-extern SyntaxTree* root;
-
-void printT(const std::string& prefix, SyntaxTree* node, bool isLeft)
+//extern SyntaxTree* root;
+//extern std::vector<Token> tokens;
+//std::vector<std::pair<int, int>> lineMap;
+void printT(const std::string& prefix, SyntaxTree* node)
 {
 	if (node != nullptr)
 	{
@@ -22,44 +23,37 @@ void printT(const std::string& prefix, SyntaxTree* node, bool isLeft)
 		std::cout << node->nodetype << std::endl;
 
 		// enter the next tree level - left and right branch
-		printT(prefix + (isLeft ? "|   " : "    "), node->l, true);
-		printT(prefix + (isLeft ? "|   " : "    "), node->r, false);
+		if (node->  l != nullptr)  printT(prefix + "|   " , node->l);
+		if (node -> r != nullptr) printT(prefix + "|   ", node->r);
 	}
 }
 void bisonTest() {
 	while (yyparse() != 0);
-	std::cout << "success\n";
-	printT("", root, false);
+	printT("", root);
+	if(parseSuccess)
+		std::cout << "Parse success.\n";
+	else
+		std::cout << "Parse failed.\n";
 }
 int main(int /* argc */, char** /* argv */)
 {
 	std::string str = R"(
 		begin
-			int x;
-			int y=x+9;
-			/*	comments
-
-			*/
-			if x>=a then{
-				x=x+1;
-			}
-			bool a;//comment
-			if x>a then{
-				int c=1;
-			}
-			else{
-				y=x;
-				x=x+1;
-			}
-			print(a);
-			
-			bool x=a==b;
+			int b=1;
+			b=b*10;
+			a=(b+10)*b;
+			int b=1;
+			b=b*10;
+			a=(b+10)*b;
+			int b=1;
+			b=b*10;
+			a=(b+10)*b;
 			do{
-				int b=1;
-				b=b*10;
-				a=(b+10)*b;
-			}while(a>1);
-			print(a+1);
+					int b=1;
+					b=b*10;
+					a=(b+10)*b;
+				}while(a>1);
+
 		end
 
 	)";
@@ -71,6 +65,7 @@ int main(int /* argc */, char** /* argv */)
 		;
 	lexer->yy_delete_buffer(buffer); // Delete the buffer
 
-	StateFactory stateFactory;
-	
+	StateFactory stateFactory(tokens);
+	stateFactory.yyparse();
+	//bisonTest();
 }

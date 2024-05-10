@@ -8,7 +8,8 @@ struct Token {
     int value;
 };
 extern std::vector<Token> tokens;
-
+extern std::vector<std::pair<int, int>> lineMap;
+extern bool parseSuccess;
 class SyntaxTree {
 public:
     std::string nodetype;

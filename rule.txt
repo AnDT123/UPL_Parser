@@ -29,6 +29,7 @@ t-> t TIMES f
 t-> f
 f-> ID
 f-> INT_NUM
+f-> ( e )
 
 Nonterminal	FOLLOW
 program		-> {$}
@@ -41,9 +42,9 @@ decl_type	-> {ID}
 assign_stmt	-> {END,},{,ID,PRINT,IF,DO,INT,BOOL}
 ctrl_stmt	-> {END,},{,ID,PRINT,IF,DO,INT,BOOL}
 cond		-> {THEN,),;,PLUS}
-rop			-> {ID,INT_NUM}
+rop			-> {ID,INT_NUM,(}
 ctrl_stmt1	-> {END,},{,ID,PRINT,IF,DO,INT,BOOL}
 loop_stmt	-> {END,},{,ID,PRINT,IF,DO,INT,BOOL}
-e			-> {;,PLUS}
-t			-> {;,PLUS,TIMES}
+e			-> {;,PLUS,)}
+t			-> {;,PLUS,TIMES,)}
 f			-> {GT,GE,EQ,THEN,;,PLUS,TIMES,)}

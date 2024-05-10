@@ -11,6 +11,7 @@
 #include "Common.h"
 #include "parser.tab.h"
 std::vector<Token> tokens;
+std::vector<std::pair<int, int>> lineMap;
 
 int mylineno = 0;
 %}
@@ -30,8 +31,10 @@ digit  	[0-9]
 
 		while((c = yyinput()) != 0)
 			{
-			if(c == '\n')
+			if(c == '\n'){
 				++mylineno;
+				lineMap.push_back({tokens.size(), mylineno});
+			}
 
 			else if(c == '*')
 				{
@@ -49,11 +52,14 @@ digit  	[0-9]
 		{
 			if(c == '\n'){
 				++mylineno;
+				lineMap.push_back({tokens.size(), mylineno});
 				break;
 			}
 		}
 	}
-\n		mylineno++;
+\n		{	mylineno++;
+			lineMap.push_back({tokens.size(), mylineno});
+		}
 
 "begin" { Token t; t.type = START; t.value = START; tokens.push_back(t);}
 "end" { Token t; t.type = END; t.value = END; tokens.push_back(t); }

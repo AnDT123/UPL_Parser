@@ -1,6 +1,8 @@
 #include <vector>
 #include <map>
 #include <string>
+#include "Common.h"
+
 #pragma once
 class Symbol {
 public:
@@ -91,7 +93,7 @@ public:
         followTable[cond] = follow9;
 
         // follow(rop) = {ID,INT_NUM}
-        std::vector<int> follow10{ ID, INT_NUM };
+        std::vector<int> follow10{ ID, INT_NUM , '('};
         followTable[rop] = follow10;
 
         // follow(ctrl_stmt1) = {END,},{,ID,PRINT,IF,DO,INT,BOOL}
@@ -103,17 +105,61 @@ public:
         followTable[loop_stmt] = follow12;
 
         // follow(e) = {;,PLUS}
-        std::vector<int> follow13{ ';', PLUS };
+        std::vector<int> follow13{ ';', PLUS ,')'};
         followTable[e] = follow13;
 
         // follow(t) = {;,PLUS,TIMES}
-        std::vector<int> follow14{ ';', PLUS, TIMES };
+        std::vector<int> follow14{ ';', PLUS, TIMES ,')'};
         followTable[t] = follow14;
 
         // follow(f) = {GT,GE,EQ,THEN,;,PLUS,TIMES,)}
         std::vector<int> follow15{ GT, GE, EQ, THEN, ';', PLUS, TIMES, ')' };
         followTable[f] = follow15;
 
+    }
+    static std::string enumToString(int nt) {
+        switch (nt) {
+            case program: return "program";
+            case stmtlist: return "stmtlist";
+            case block: return "block";
+            case stmt: return "stmt";
+            case decl_stmt: return "decl_stmt";
+            case assign_stmt: return "assign_stmt";
+            case ctrl_stmt: return "ctrl_stmt";
+            case loop_stmt: return "loop_stmt";
+            case decl_type: return "decl_type";
+            case decl_body: return "decl_body";
+            case e: return "e";
+            case cond: return "cond";
+            case rop: return "rop";
+            case ctrl_stmt1: return "ctrl_stmt1";
+            case t: return "t";
+            case f: return "f";
+            case START: return "START";
+            case END: return "END";
+            case IF: return "IF";
+            case THEN: return "THEN";
+            case ELSE: return "ELSE";
+            case PLUS: return "PLUS";
+            case TIMES: return "TIMES";
+            case INT: return "INT";
+            case BOOL: return "BOOL";
+            case DO: return "DO";
+            case WHILE: return "WHILE";
+            case PRINT: return "PRINT";
+            case GT: return "GT";
+            case GE: return "GE";
+            case EQ: return "EQ";
+            case ASSIGN: return "ASSIGN";
+            case ID: return "ID";
+            case INT_NUM: return "INT_NUM";
+            case '{': return "{";
+            case '}': return "}";
+            case ';': return ";";
+            case '(': return "(";
+            case ')': return ")";
+            default: return "Unknown";
+        }
     }
 };
 class Production {
@@ -289,6 +335,11 @@ public:
         int lhs30 = Symbol::f;
         std::vector<int> rhs30{ Symbol::INT_NUM };
         productions.push_back(Production(lhs30, rhs30));
+
+        //f-> ( e )  
+        int lhs31 = Symbol::f;
+        std::vector<int> rhs31{ '(', Symbol::e, ')'};
+        productions.push_back(Production(lhs31, rhs31));
     }
     int findProductionNumber(Production p) {
         auto it = std::find(productions.begin(), productions.end(), p);
@@ -330,16 +381,21 @@ public:
 };
 class StateFactory {
 private:
+    int yyval =0;
+    int currentToken = 0;
     Rules rules;
     Symbol symbols;
     std::vector<State> states;
     std::map<int, std::map<int, std::pair<std::string, int>>> actionTable;
     std::map<int, std::map<int, int>> gotoTable;
+    std::vector<Token> tokenVec;
 public:
-    StateFactory();
+    StateFactory(std::vector<Token> vec);
     void printTables();
     int findState(const State state);
     void addState(const State state);
     State GOTO(State state, int sym);
     State closure(State s);
+    Token yylex();
+    void yyparse();
 };
